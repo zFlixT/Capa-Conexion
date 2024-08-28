@@ -80,5 +80,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatosLayer\DatosLayer.csproj">
+      <Project>{7d73138b-447c-4b6e-8612-dc2a0d65f89b}</Project>
+      <Name>DatosLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -46,7 +46,7 @@
             // 
             // btnCargar
             // 
-            this.btnCargar.Font = new System.Drawing.Font("Arial", 9F);
+            this.btnCargar.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCargar.Location = new System.Drawing.Point(9, 455);
             this.btnCargar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCargar.Name = "btnCargar";

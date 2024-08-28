@@ -20,7 +20,7 @@ namespace CapaConexion
 
         private void btnCargar_Click(object sender, EventArgs e)
         {
-            SqlConnection conexion = new SqlConnection("Data Source=ASUS_TUF_JEREMY\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;Connect Timeout=30;Encrypt=False;");
+            SqlConnection conexion = new SqlConnection("Data Source=DESKTOP-O6CMB76\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;");
             conexion.Open();
             MessageBox.Show("Conectado");
             conexion.Close();

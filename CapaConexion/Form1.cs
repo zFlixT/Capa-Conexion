@@ -23,7 +23,7 @@ namespace CapaConexion
         private void btnCargar_Click(object sender, EventArgs e)
         {
             SqlConnection conexion = new SqlConnection
-                ("Data Source=DESKTOP-O6CMB76\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;");
+                ("Data Source=DESKTOP-O6CMB76\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;Connect Timeout=30");
             MessageBox.Show("Conexion creada");
             conexion.Open();
 
@@ -49,6 +49,7 @@ namespace CapaConexion
             SqlDataReader reader = comando.ExecuteReader();
 
 
+
             while (reader.Read())
             {
 
@@ -66,8 +67,8 @@ namespace CapaConexion
 
                 Customers.Add(customers);
             }
-
             dataGrid.DataSource = Customers;
+
 
             MessageBox.Show("Conexion cerrada");
             conexion.Close();
@@ -76,13 +77,17 @@ namespace CapaConexion
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            var filtro = Customers.FindAll(x => x.CompanyName.StartsWith(tbFiltro.Text));
+            var filtro = Customers.FindAll(X => X.CompanyName.StartsWith(tbFiltro.Text));
             dataGrid.DataSource = filtro;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            DatosLayer.DataBase.ApplicationName = "Programacion 2 ejemplo";
+            DatosLayer.DataBase.ConnetionTimeout = 30;
+
             string cadenaConexion = DatosLayer.DataBase.ConnectionString;
+            var conxion = DatosLayer.DataBase.GetSql();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatosLayer
 {
-    internal class customers
+    public class customers
     {
         public string CompanyName { get; set; }
         public string ContactName { get; set; }

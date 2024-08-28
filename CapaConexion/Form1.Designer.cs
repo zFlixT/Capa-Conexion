@@ -52,7 +52,7 @@
             this.btnCargar.Location = new System.Drawing.Point(9, 455);
             this.btnCargar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCargar.Name = "btnCargar";
-            this.btnCargar.Size = new System.Drawing.Size(99, 50);
+            this.btnCargar.Size = new System.Drawing.Size(102, 50);
             this.btnCargar.TabIndex = 1;
             this.btnCargar.Text = "Cargar Informacion";
             this.btnCargar.UseVisualStyleBackColor = true;
@@ -62,7 +62,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 9F);
-            this.label1.Location = new System.Drawing.Point(11, 27);
+            this.label1.Location = new System.Drawing.Point(11, 26);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 15);
@@ -71,7 +71,7 @@
             // 
             // tbFiltro
             // 
-            this.tbFiltro.Location = new System.Drawing.Point(53, 27);
+            this.tbFiltro.Location = new System.Drawing.Point(53, 26);
             this.tbFiltro.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbFiltro.Name = "tbFiltro";
             this.tbFiltro.Size = new System.Drawing.Size(76, 20);

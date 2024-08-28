@@ -37,12 +37,26 @@ namespace CapaConexion
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            DatosLayer.DataBase.ApplicationName = "Programacion 2 ejemplo";
-            DatosLayer.DataBase.ConnetionTimeout = 30;
+            //DatosLayer.DataBase.ApplicationName = "Programacion 2 ejemplo";
+            //DatosLayer.DataBase.ConnetionTimeout = 30;
 
-            string cadenaConexion = DatosLayer.DataBase.ConnectionString;
-            var conxion = DatosLayer.DataBase.GetSql();
+            //string cadenaConexion = DatosLayer.DataBase.ConnectionString;
+            //var conxion = DatosLayer.DataBase.GetSql();
 
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            var cliente = customerRepository.ObtenerPorID(txtBuscar.Text);
+            if (cliente != null)
+            {
+                txtBuscar.Text = cliente.CompanyName;
+                MessageBox.Show(cliente.CompanyName);
+            }
+            else
+            {
+                MessageBox.Show("Id no encontrado");
+            }
         }
     }
 }

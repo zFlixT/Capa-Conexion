@@ -9,10 +9,13 @@ namespace DatosLayer
 {
     public class CustomerRepository
     {
+        // Método que obtiene todos los registros de la tabla "Customers" de la base de datos
         public List<customers> ObtenerTodos()
         {
+            // Se establece una conexión a la base de datos utilizando el método GetSql()
             using (var conexion = DataBase.GetSql())
             {
+                // Construcción de la consulta SQL para obtener todas las columnas de la tabla "Customers"
                 String selectFrom = "";
                 selectFrom = selectFrom + "SELECT " + "\n";
                 selectFrom = selectFrom + "      [CompanyName] " + "\n";
@@ -27,26 +30,34 @@ namespace DatosLayer
                 selectFrom = selectFrom + "      ,[Fax] " + "\n";
                 selectFrom = selectFrom + "  FROM [dbo].[Customers]";
 
+                // Se ejecuta el comando SQL a través de SqlCommand
                 using (SqlCommand comando = new SqlCommand(selectFrom, conexion))
                 {
+                    // Se ejecuta la consulta y se almacena el resultado en SqlDataReader
                     SqlDataReader reader = comando.ExecuteReader();
+
+                    // Lista para almacenar todos los registros de la tabla "Customers"
                     List<customers> Customers = new List<customers>();
 
+                    // Se recorre el SqlDataReader para leer cada fila del resultado
                     while (reader.Read())
                     {
+                        // Se convierte cada fila en un objeto "customers" y se agrega a la lista
                         var customers = LeerDelDataReader(reader);
                         Customers.Add(customers);
                     }
-                    return Customers;
+                    return Customers; // Se retorna la lista completa de clientes
                 }
             }
         }
+
+        // Método que obtiene un cliente específico basado en su ID
         public customers ObtenerPorID(string id)
         {
-
+            // Se establece una conexión a la base de datos utilizando el método GetSql()
             using (var conexion = DataBase.GetSql())
             {
-
+                // Construcción de la consulta SQL para obtener un cliente específico por su ID
                 String selectForID = "";
                 selectForID = selectForID + "SELECT [CustomerID] " + "\n";
                 selectForID = selectForID + "      ,[CompanyName] " + "\n";
@@ -59,27 +70,33 @@ namespace DatosLayer
                 selectForID = selectForID + "      ,[Country] " + "\n";
                 selectForID = selectForID + "      ,[Phone] " + "\n";
                 selectForID = selectForID + "      ,[Fax] " + "\n";
-                selectForID = selectForID + "  FROM [dbo].[Customers] " + "\n";
-                selectForID = selectForID + $"  Where CustomerID = @customersId";
+                selectForID = selectForID + $"  WHERE CustomerID = @customerId";
 
+                // Se ejecuta el comando SQL a través de SqlCommand, con un parámetro para el ID del cliente
                 using (SqlCommand comando = new SqlCommand(selectForID, conexion))
                 {
+                    // Se añade el parámetro del ID del cliente a la consulta
                     comando.Parameters.AddWithValue("customerId", id);
+
+                    // Se ejecuta la consulta y se almacena el resultado en SqlDataReader
                     var reader = comando.ExecuteReader();
+
                     customers customers = null;
-                    //validadmos 
+
+                    // Valida si hay resultados y asigna el valor del cliente encontrado
                     if (reader.Read())
                     {
-                        customers = LeerDelDataReader(reader);
+                        customers = LeerDelDataReader(reader); // Convierte la fila en un objeto "customers"
                     }
-                    return customers;
+                    return customers; // Retorna el cliente encontrado
                 }
             }
         }
 
+        // Método que mapea los datos de una fila obtenida de SqlDataReader a un objeto "customers"
         public customers LeerDelDataReader(SqlDataReader reader)
         {
-
+            // Se crea un nuevo objeto "customers" y se asignan los valores leídos desde SqlDataReader
             customers customers = new customers();
             customers.CompanyName = reader["CompanyName"] == DBNull.Value ? "" : (String)reader["CompanyName"];
             customers.ContactName = reader["ContactName"] == DBNull.Value ? "" : (String)reader["ContactName"];
@@ -91,8 +108,42 @@ namespace DatosLayer
             customers.Country = reader["Country"] == DBNull.Value ? "" : (String)reader["Country"];
             customers.Phone = reader["Phone"] == DBNull.Value ? "" : (String)reader["Phone"];
             customers.Fax = reader["Fax"] == DBNull.Value ? "" : (String)reader["Fax"];
-            return customers;
+
+            return customers; // Retorna el objeto con los valores del cliente
         }
 
+        public int InsertarCliente(customers customer)
+        {
+            using (var conexion = DataBase.GetSql())
+            {
+                String insertInto = "";
+                insertInto = insertInto + "INSERT INTO [dbo].[Customers] " + "\n";
+                insertInto = insertInto + "           ([CustomerID] " + "\n";
+                insertInto = insertInto + "           ,[CompanyName] " + "\n";
+                insertInto = insertInto + "           ,[ContactName] " + "\n";
+                insertInto = insertInto + "           ,[ContactTitle] " + "\n";
+                insertInto = insertInto + "           ,[Address] " + "\n";
+                insertInto = insertInto + "           ,[City]) " + "\n";
+                insertInto = insertInto + "     VALUES " + "\n";
+                insertInto = insertInto + "           (@CustomerID " + "\n";
+                insertInto = insertInto + "           ,@CompanyName " + "\n";
+                insertInto = insertInto + "           ,@ContactName " + "\n";
+                insertInto = insertInto + "           ,@ContactTitle " + "\n";
+                insertInto = insertInto + "           ,@Address " + "\n";
+                insertInto = insertInto + "           ,@City)";
+
+                using (var comando = new SqlCommand(insertInto, conexion))
+                {
+                    comando.Parameters.AddWithValue("CustomerID", customer.CustomerID);
+                    comando.Parameters.AddWithValue("CompanyName", customer.CompanyName);
+                    comando.Parameters.AddWithValue("ContactName", customer.ContactName);
+                    comando.Parameters.AddWithValue("ContactTitle", customer.ContactName);
+                    comando.Parameters.AddWithValue("Address", customer.Address);
+                    comando.Parameters.AddWithValue("City", customer.City);
+                    var insertados = comando.ExecuteNonQuery();
+                    return insertados;
+                }
+            }
+        }
     }
 }

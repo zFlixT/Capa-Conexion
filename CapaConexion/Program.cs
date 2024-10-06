@@ -16,6 +16,7 @@ namespace CapaConexion
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            // Se asigna el formulario que se ejecutara primero 
             Application.Run(new Form1());
         }
     }

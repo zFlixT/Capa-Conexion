@@ -59,40 +59,40 @@ namespace CapaConexion
             // Llama al método ObtenerPorID pasando el valor ingresado en el TextBox
             var cliente = customerRepository.ObtenerPorID(txtBuscar.Text);
 
-            // Se activa si se encuentra un cliente con el Id proporcionado
-            if (cliente != null)
-            {
-                // Muestra el nombre de la empresa en el TextBox y un mensaje con el nombre
-                txtBuscar.Text = cliente.CompanyName;
-                MessageBox.Show(cliente.CompanyName);
-            }
-            else
-            {
-                // Si no se encuentra el cliente, muestra un mensaje indicando que el ID no fue encontrado
-                MessageBox.Show("Id no encontrado");
-            }
+            tboxCustomerID.Text = cliente.CustomerID;
+            tboxCompanyName.Text = cliente.CompanyName;
+            tboxContactName.Text = cliente.ContactName;
+            tboxContactTitle.Text = cliente.ContactTitle;
+            tboxAddress.Text = cliente.Address;
+            tboxCity.Text = cliente.City;
         }
 
         private void btnInsertar_Click(object sender, EventArgs e)
         {
-            var nuevoCliente = new customers
-            {
-                CustomerID = tboxCustomerID.Text,
-                CompanyName = tboxCompanyName.Text,
-                ContactName = tboxContactName.Text,
-                ContactTitle = tboxContactTitle.Text,
-                Address = tboxAddress.Text,
-                City = tboxCity.Text
-            };
             var resultado = 0;
-            if (validarCampoNull(nuevoCliente) == false)
-            {
-                resultado = customerRepository.InsertarCliente(nuevoCliente);
-            }
-            else
-            {
-                MessageBox.Show("Debe completar todos los campos por favor" + resultado);
-            }
+            ;
+
+            var nuevoCliente = ObtenerNuevoCliente();
+
+
+            // hayNull= validarCampoNull(nuevoCliente) ? true : false ;
+
+            /*  if (tboxCustomerID.Text != "" || 
+                  tboxCompanyName.Text !="" ||
+                  tboxContacName.Text != "" ||
+                  tboxContacName.Text != "" ||
+                  tboxAddress.Text != ""    ||
+                  tboxCity.Text != "")
+              {
+                  resultado = customerRepository.InsertarCliente(nuevoCliente);
+                  MessageBox.Show("Guardado" + "Filas modificadas = " + resultado);
+              }
+              else {
+                  MessageBox.Show("Debe completar los campos por favor");
+              }
+
+              */
+
             /*
             if (nuevoCliente.CustomerID == "") {
                 MessageBox.Show("El Id en el usuario debe de completarse");
@@ -122,10 +122,19 @@ namespace CapaConexion
             }
 
             */
+
+            if (validarCampoNull(nuevoCliente) == false)
+            {
+                resultado = customerRepository.InsertarCliente(nuevoCliente);
+                MessageBox.Show("Guardado" + "Filas modificadas = " + resultado);
+            }
+            else
+            {
+                MessageBox.Show("Debe completar los campos por favor");
+            }
         }
         public Boolean validarCampoNull(Object objeto)
         {
-
             foreach (PropertyInfo property in objeto.GetType().GetProperties())
             {
                 object value = property.GetValue(objeto, null);
@@ -135,6 +144,30 @@ namespace CapaConexion
                 }
             }
             return false;
+        }
+
+
+        private customers ObtenerNuevoCliente()
+        {
+
+            var nuevoCliente = new customers
+            {
+                CustomerID = tboxCustomerID.Text,
+                CompanyName = tboxCompanyName.Text,
+                ContactName = tboxContactName.Text,
+                ContactTitle = tboxContactTitle.Text,
+                Address = tboxAddress.Text,
+                City = tboxCity.Text
+            };
+
+            return nuevoCliente;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var actualizarCliente = ObtenerNuevoCliente();
+            int actualizadas = customerRepository.ActualizarCliente(actualizarCliente);
+            MessageBox.Show($"Filas actualizadas = {actualizadas}");
         }
     }
 }
